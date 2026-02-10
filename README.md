@@ -295,5 +295,5 @@ python -c "import torch; print('CUDA available:', torch.cuda.is_available())"
 ## 致谢
 
 - [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS) 项目团队
-- 庄方宜声音模型训练者
+- 庄方宜素材提供者
 - 所有贡献者和使用者
