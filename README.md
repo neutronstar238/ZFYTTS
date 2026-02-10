@@ -276,9 +276,24 @@ python -c "import torch; print('CUDA available:', torch.cuda.is_available())"
 
 ## 许可证
 
-本项目基于 GPT-SoVITS 开源项目。
+本项目采用 MIT 许可证开源。详见 [LICENSE](LICENSE) 文件。
+
+### 重要声明
+
+- 本项目代码部分采用 MIT 许可证
+- 基于 [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS) 开源项目
+- 声音模型（庄方宜）仅供个人学习和研究使用
+- 商业使用需获得适当授权
+
+## 免责声明
+
+1. 本项目仅供学习交流使用
+2. 使用本项目生成的语音内容，使用者需自行承担相关责任
+3. 禁止将本项目用于任何违法违规用途
+4. 禁止用于制作虚假信息、诈骗等不当用途
 
 ## 致谢
 
-- GPT-SoVITS 项目团队
+- [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS) 项目团队
 - 庄方宜声音模型训练者
+- 所有贡献者和使用者
