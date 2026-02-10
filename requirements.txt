@@ -1,0 +1,42 @@
+# GPT-SoVITS TTS 项目依赖
+# Python 3.14
+
+# 深度学习框架 (CUDA 13.0)
+torch==2.9.1+cu130
+torchaudio==2.9.1
+--extra-index-url https://download.pytorch.org/whl/nightly/cu130
+
+# 音频处理
+soundfile>=0.12.1
+librosa>=0.10.0
+scipy>=1.10.0
+numpy>=2.0.0
+
+# 文本处理
+transformers>=5.0.0
+pypinyin>=0.50.0
+cn2an>=0.5.17
+jieba>=0.42.1
+opencc-python-reimplemented>=0.1.6
+
+# 英文 G2P
+g2p-en>=2.1.0
+nltk>=3.8.0
+wordsegment>=1.3.1
+inflect>=7.0.0
+
+# ONNX 推理
+onnxruntime>=1.16.0
+
+# Web UI
+gradio>=6.0.0
+fastapi>=0.100.0
+uvicorn>=0.23.0
+pydantic>=2.0.0
+
+# 其他工具
+tqdm>=4.65.0
+requests>=2.31.0
+psutil>=7.0.0
+matplotlib>=3.10.0
+peft>=0.18.0

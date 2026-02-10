@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+*.egg-info/
+dist/
+build/
+
+# 虚拟环境（不上传）
+.venv/
+venv/
+
+# 输出文件
+outputs/*.wav
+outputs/*.mp3
+cleanup.log
+web_server.log
+*.pid
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 临时文件
+tmp/
+temp/
+*.tmp
+
+# 预训练模型（太大，不上传通用预训练模型）
+GPT_SoVITS/pretrained_models/
+pretrained_models/
+
+# 训练好的模型权重（太大，建议使用网盘分享）
+GPT_weights_v2/
+SoVITS_weights_v2/
+logs/ZhuangFangyi_V1/GPT_weights_v2/
+
+# 保留参考音频和配置
+!logs/ZhuangFangyi_V1/reference_audio/
+!logs/ZhuangFangyi_V1/*.txt
