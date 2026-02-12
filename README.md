@@ -41,6 +41,7 @@ LLMchat/zhuang_fangyi_int4.gguf    # 约 2-4 GB
 
 #### TTS 模型文件
 
+**微调模型（必需）:**
 ```
 text_to_speech/GPT_weights_v2/ZhuangFangyi_V1-e16.ckpt          # 约 500 MB
 text_to_speech/SoVITS_weights_v2/ZhuangFangyi_V1_e20_s300.pth   # 约 300 MB
@@ -48,15 +49,49 @@ text_to_speech/logs/ZhuangFangyi_V1/reference_audio/
     └── zfy_raw_vocals.wav_0011840000_0012000960.wav            # 约 1 MB
 ```
 
+**基础预训练模型（必需）:**
+```
+text_to_speech/GPT_SoVITS/pretrained_models/
+├── chinese-hubert-base/
+│   ├── config.json
+│   ├── preprocessor_config.json
+│   └── pytorch_model.bin                                       # 约 400 MB
+├── chinese-roberta-wwm-ext-large/
+│   ├── config.json
+│   ├── pytorch_model.bin                                       # 约 1.2 GB
+│   └── tokenizer.json
+├── g2pw-chinese/
+│   ├── config.json
+│   ├── pytorch_model.bin                                       # 约 400 MB
+│   └── [其他配置文件]
+├── models--nvidia--bigvgan_v2_24khz_100band_256x/
+│   ├── bigvgan_generator.pt                                    # 约 350 MB
+│   └── config.json
+├── v2Pro/
+│   ├── s2Gv2Pro.pth                                           # 约 600 MB
+│   └── s2Dv2Pro.pth                                           # 约 300 MB
+├── sv/
+│   └── pretrained_eres2netv2w24s4ep4.ckpt                     # 约 200 MB
+├── fast_langdetect/
+│   └── lid.176.bin                                            # 约 1 MB
+├── s1v3.ckpt                                                  # 约 500 MB
+├── s2Gv3.pth                                                  # 约 600 MB
+└── [其他基础模型文件]
+```
+
+**总计大小:** 约 8-10 GB（包含所有模型）
+
 **验证模型文件:**
 ```bash
 # Windows
 dir LLMchat\zhuang_fangyi_int4.gguf
 dir text_to_speech\GPT_weights_v2\ZhuangFangyi_V1-e16.ckpt
+dir text_to_speech\GPT_SoVITS\pretrained_models\chinese-hubert-base\pytorch_model.bin
 
 # Linux/Mac
 ls -lh LLMchat/zhuang_fangyi_int4.gguf
 ls -lh text_to_speech/GPT_weights_v2/ZhuangFangyi_V1-e16.ckpt
+ls -lh text_to_speech/GPT_SoVITS/pretrained_models/chinese-hubert-base/pytorch_model.bin
 ```
 
 ### 1. 安装依赖
@@ -241,11 +276,17 @@ requests.post("http://localhost:5000/api/chat",
 
 ### Q: 模型文件放在哪里？
 A: 
-- LLM: `LLMchat/zhuang_fangyi_int4.gguf`
-- TTS GPT: `text_to_speech/GPT_weights_v2/ZhuangFangyi_V1-e16.ckpt`
-- TTS SoVITS: `text_to_speech/SoVITS_weights_v2/ZhuangFangyi_V1_e20_s300.pth`
+**LLM 模型:**
+- `LLMchat/zhuang_fangyi_int4.gguf`
 
-文件名必须完全匹配，路径区分大小写。
+**TTS 微调模型:**
+- `text_to_speech/GPT_weights_v2/ZhuangFangyi_V1-e16.ckpt`
+- `text_to_speech/SoVITS_weights_v2/ZhuangFangyi_V1_e20_s300.pth`
+
+**TTS 基础模型:**
+- `text_to_speech/GPT_SoVITS/pretrained_models/` 目录下的所有文件
+
+文件名和路径必须完全匹配，路径区分大小写。总计约 8-10 GB。
 
 ---
 
