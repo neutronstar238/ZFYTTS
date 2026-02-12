@@ -105,16 +105,20 @@ python test_apis.py
 | message | string | ✅ | - | 用户消息内容 |
 | user_id | string | ❌ | "default_user" | 用户唯一标识 |
 | session_id | string | ❌ | null | 会话ID（不提供则创建新会话） |
-| system_prompt | string | ❌ | "你是庄方宜..." | 系统提示词 |
+| system_prompt | string | ❌ | 庄方宜角色设定 | 系统提示词 |
 | max_tokens | integer | ❌ | 512 | 最大生成token数 |
 | temperature | float | ❌ | 0.7 | 采样温度 (0.0-2.0) |
+| top_p | float | ❌ | 0.8 | Top-p 采样 |
+| repeat_penalty | float | ❌ | 1.15 | 重复惩罚（避免复读） |
 
 **请求示例:**
 ```json
 {
-  "message": "你好，请介绍一下你自己",
+  "message": "管理员，武陵的研究进展如何？",
   "user_id": "user_001",
-  "temperature": 0.8
+  "temperature": 0.7,
+  "top_p": 0.8,
+  "repeat_penalty": 1.15
 }
 ```
 
@@ -123,7 +127,7 @@ python test_apis.py
 {
   "success": true,
   "data": {
-    "response": "你好，我是您的专属AI助手，庄方宜...",
+    "response": "（轻轻翻阅着手中的报告，抬眼看向你）管理员，武陵的研究进展...",
     "session_id": "3084ed8e-4da6-4914-b8a7-69b6478e2c53",
     "user_id": "user_001",
     "message_count": 3
@@ -135,6 +139,8 @@ python test_apis.py
 - 首次请求响应时间较长（30-120秒），这是正常的
 - 建议设置较长的超时时间（180秒以上）
 - 相同 user_id 和 session_id 的对话会保持上下文
+- `repeat_penalty` 参数用于避免模型重复相同的话（推荐 1.15）
+- 默认系统提示词包含完整的庄方宜角色设定
 
 ---
 

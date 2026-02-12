@@ -137,9 +137,11 @@ class ChatBot:
              user_input: str, 
              user_id: str = "default_user",
              session_id: Optional[str] = None,
-             system_prompt: str = "你是庄方宜，一个温柔体贴的AI助手。请用庄方宜的身份和语气回答问题。",
+             system_prompt: str = None,
              max_tokens: int = 512,
-             temperature: float = 0.7) -> Dict:
+             temperature: float = 0.7,
+             top_p: float = 0.8,
+             repeat_penalty: float = 1.15) -> Dict:
         """
         Process user input and generate response
         
@@ -149,7 +151,9 @@ class ChatBot:
             session_id: Session ID (creates new if None)
             system_prompt: System prompt for the model
             max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature
+            temperature: Sampling temperature (0.7 recommended)
+            top_p: Top-p sampling (0.8 recommended)
+            repeat_penalty: Repeat penalty (1.15 recommended to avoid repetition)
             
         Returns:
             Dict containing response and session info
@@ -162,7 +166,7 @@ class ChatBot:
         messages = self.memory_manager.load_memory(user_id, session_id)
         
         # Add system prompt if this is a new conversation
-        if not messages:
+        if not messages and system_prompt:
             messages.append({
                 'role': 'system',
                 'content': system_prompt,
@@ -185,7 +189,9 @@ class ChatBot:
             prompt,
             max_tokens=max_tokens,
             temperature=temperature,
-            stop=["User:", "\n\n\n"],
+            top_p=top_p,
+            repeat_penalty=repeat_penalty,
+            stop=["User:", "\n\n\n", "<|im_start|>", "<|im_end|>", "<|endoftext|>"],
             echo=False
         )
         
