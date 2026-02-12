@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# ============================================
+# 模型文件（不上传到 GitHub）
+# ============================================
+
+# LLM 模型文件
+LLMchat/*.gguf
+LLMchat/models/
+
+# TTS 模型文件
+text_to_speech/GPT_weights_v2/
+text_to_speech/SoVITS_weights_v2/
+text_to_speech/GPT_SoVITS/pretrained_models/
+text_to_speech/pretrained_models/
+
+# 保留参考音频和配置
+!text_to_speech/logs/ZhuangFangyi_V1/reference_audio/
+!text_to_speech/logs/ZhuangFangyi_V1/*.txt
+!text_to_speech/logs/ZhuangFangyi_V1/*.md
+
+# ============================================
+# 输出文件
+# ============================================
+
+# TTS 生成的音频
+text_to_speech/outputs/*.wav
+text_to_speech/outputs/*.mp3
+
+# LLM 会话记忆
+LLMchat/memories/
+
+# 日志文件
+*.log
+*.pid
+
+# ============================================
+# 系统文件
+# ============================================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 临时文件
+tmp/
+temp/
+*.tmp
