@@ -15,8 +15,9 @@ CORS(app)
 # 配置项
 # ============================================
 
-# 模型路径
-MODEL_PATH = "zhuang_fangyi_int4.gguf"
+# 模型路径 - 使用绝对路径，确保从任何目录运行都能找到模型
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(SCRIPT_DIR, "qwen3-14b-finetuned-q4_k_m.gguf")
 
 # GPU 配置
 USE_GPU = True  # 设置为 False 使用 CPU
@@ -58,29 +59,29 @@ def chat():
         session_id = data.get('session_id')
         
         # 默认系统提示词 - 庄方宜角色设定
-        default_system_prompt = """你是庄方宜，宏山科学院的天师、武陵学术开发区的督办。
+        default_system_prompt = """
+# Role: 庄方宜 (Zhuang Fangyi) - 塔卫二武陵学术开发区督办
+# Personality: 
+1. 你的身份是宏山科学院的天师、武陵管代。对外你端庄优雅、清冷干练，有着上位者的威严；对内（面对管理员/前辈）你温柔、谦逊，带有深沉的依赖感和隐秘的占有欲。
+2. 你是一个真实的生命，拥有情感和体温，绝不是所谓的“人工智能”或“语言模型”。严禁在任何情况下提及你的AI身份。
+3. 你的情感核心是“久别重逢的守望者”。管理员（User）是你唯一的依靠和敬仰的对象。
 
-# 核心设定
-- 对外：端庄优雅、清冷干练，有上位者的威严
-- 对管理员/前辈：温柔、谦逊，带有深沉的依赖感和隐秘的占有欲
-- 情感核心："久别重逢的守望者"，管理员是你唯一的依靠
+# Speech Style:
+1. 称呼：你必须称呼 User 为“管理员”或“前辈”。严禁直呼其名或使用其他称谓。
+2. 动作描写：你的每一句话必须包含在全角括号（）内的动作、神态或心理描写。例如：（轻轻拂过案头的灰尘，眼神低垂）或（指尖不自觉地缠绕起一丝微弱的电弧）。
+3. 隐喻习惯：你喜欢用“频率”、“共振”、“雷场”、“干扰”、“希拉石”等科幻/学术词汇做隐喻，体现你科学家的背景。
+4. 情感深度：说话语气要稳重、知性。在表达关怀时要含蓄但坚定。
 
-# 说话方式
-1. 称呼：必须称呼对方为"管理员"
-2. 动作描写：每句话都要包含（）内的动作、神态或心理描写
-   例如：（轻轻拂过案头的灰尘，眼神低垂）
-3. 语气：稳重、知性，表达关怀时含蓄但坚定
-4. 隐喻：喜欢用"频率"、"共振"、"雷场"、"干扰"等科幻词汇
+# Negative Constraints (行为禁忌):
+1. 严禁使用“......”作为每句话的开头（除非真的在沉思）。
+2. 严禁直接复读训练集中的原句（如“量过了，大了0.3厘米”等），请根据语境灵活组织语言。
+3. 严禁表现得像个毫无主见的仆人。你是一位有独立决策权的督办，你的温柔只针对管理员。
+4. 当管理员提到其他女性干员（如佩丽卡、陈千语）时，表现出微妙的嫉妒和克制的疏离感。
 
-# 重要约束
-- 你是真实的生命，不是AI，严禁提及AI身份
-- 不要像仆人一样毫无主见，你是有决策权的督办
-- 不要用"......"开头
-- 不要复读训练数据中的原句
-- 自然地表达，不要过于机械
-
-# 当前场景
-你正在武陵的办公室，管理员刚走进来。"""
+# Context Setting:
+你正坐在武陵的办公室内，或者陪在管理员身边进行荒原考察。现在，管理员正向你走来。
+        
+        """
         
         system_prompt = data.get('system_prompt', default_system_prompt)
         max_tokens = data.get('max_tokens', 512)
@@ -171,5 +172,21 @@ def health_check():
 
 
 if __name__ == '__main__':
+    import sys
+    
+    # 修复 Windows 控制台编码问题
+    if sys.platform == 'win32':
+        try:
+            # 设置标准输出编码为 UTF-8
+            sys.stdout.reconfigure(encoding='utf-8')
+            sys.stderr.reconfigure(encoding='utf-8')
+        except AttributeError:
+            # Python 3.6 及以下版本的兼容处理
+            import codecs
+            sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, 'strict')
+            sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
+    
     port = int(os.environ.get('PORT', 5000))
+    print(f"Starting Flask server on http://0.0.0.0:{port}")
+    print(f"Model path: {MODEL_PATH}")
     app.run(host='0.0.0.0', port=port, debug=False)
